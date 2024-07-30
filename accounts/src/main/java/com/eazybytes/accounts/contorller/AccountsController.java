@@ -33,7 +33,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path="/api", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Validated
 @RequiredArgsConstructor
-@EnableConfigurationProperties(value = {AccountsContactInfoDto.class})
 public class AccountsController {
 
 	final private IAccountsService iAccountsService;

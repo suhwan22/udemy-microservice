@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.2'
     id 'io.spring.dependency-management' version '1.1.6'
+    id 'com.google.cloud.tools.jib' version '3.4.3'
 }
 
 group = 'com.eazybytes'
@@ -15,6 +16,19 @@ java {
 
 jar {
     enabled = false
+}
+
+jib {
+    from {
+        image = "openjdk:17-jdk"
+    }
+    to {
+        image = "suhwan22/cards"
+        tags = ["s4"]
+    }
+    container {
+        entrypoint = ['java', '-Dspring profiles.active=test', '-jar', 'app.jar']
+    }
 }
 
 configurations {

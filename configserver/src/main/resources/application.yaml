@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: "configserver"
+  profiles:
+    active: git
+  #    active: native // for using classpath
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "guest"
+    password: "guest"
+  cloud:
+    config:
+      server:
+        git:
+          uri: "https://github.com/suhwan22/config-msa.git"
+          default-label: main
+          timeout: 5
+          clone-on-start: true
+          force-pull: true
+#        native:
+#          search-locations: "classpath:/config"
+#          search-locations: "file:///Users//suhwan//Documents//config" in this way, local files can be allowed
+
+# if you want to encrypt, you can post /encrypt some text and also can post /decrypt encrypted text.
+#encrypt:
+#  key: jfdiosafjdisoa
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+server:
+  port: 8071

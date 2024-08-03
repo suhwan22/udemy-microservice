@@ -4,68 +4,20 @@ spring:
   profiles:
     active: git
   #    active: native // for using classpath
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "guest"
+    password: "guest"
   cloud:
     config:
       server:
         git:
-          uri: "git@github.com:suhwan22/config-msa.git"
-          ignore-local-ssh-settings: true
+          uri: "https://github.com/suhwan22/config-msa.git"
           default-label: main
           timeout: 5
           clone-on-start: true
           force-pull: true
-          private-key: "\
-  -----BEGIN RSA PRIVATE KEY-----\n\
-  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\n\
-  -----END RSA PRIVATE KEY-----%"
 #        native:
 #          search-locations: "classpath:/config"
 #          search-locations: "file:///Users//suhwan//Documents//config" in this way, local files can be allowed
@@ -73,6 +25,21 @@ spring:
 # if you want to encrypt, you can post /encrypt some text and also can post /decrypt encrypted text.
 #encrypt:
 #  key: jfdiosafjdisoa
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+  endpoint:
+    health:
+      probes:
+        enabled: true
 
 server:
   port: 8071

@@ -1,28 +1,9 @@
 services:
-  rabbit:
-    image: rabbitmq:3.13-management
-    hostname: rabbitmq
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    healthcheck:
-      test: rabbitmq-diagnostics check_port_connectivity
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 5s
-    extends:
-      file: common-config.yaml
-      service: network-deploy-service
-
   configserver:
     image: "suhwan22/configserver:s6"
     container_name: configserver-ms
     ports:
       - "8071:8071"
-    depends_on:
-      rabbit:
-        condition: service_healthy
     healthcheck:
       test: "curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
@@ -33,6 +14,29 @@ services:
       file: common-config.yaml
       service: microservice-base-config
 
+  accountsdb:
+    container_name: accountsdb
+    image: postgres:16.3-alpine3.19
+    restart: always
+    environment:
+#      PGPASSWORD: accounts
+      POSTGRES_PASSWORD: accounts
+      POSTGRES_USER: accounts
+      POSTGRES_DB: accountsdb
+      PGDATABASE: accountsdb
+      PGUSER: accounts
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      timeout: 30s
+      retries: 10
+      interval: 10s
+      start_period: 10s
+    extends:
+      file: common-config.yaml
+      service: network-deploy-service
+
   accounts:
     image: "suhwan22/accounts:s6"
     container_name: accounts-ms
@@ -40,6 +44,8 @@ services:
       - "8080:8080"
     depends_on:
       configserver:
+        condition: service_healthy
+      accountsdb:
         condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "accounts"

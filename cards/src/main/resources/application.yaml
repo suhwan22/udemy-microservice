@@ -20,26 +20,34 @@ spring:
     show-sql: true
   config:
     import: "optional:configserver:http://localhost:8071/"
-#  rabbitmq:
-#    host: "localhost"
-#    port: 5672
-#    username: "guest"
-#    password: "guest"
 
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+  endpoint:
+    shutdown:
+      enabled: true
+  info:
+    env:
+      enabled: true
 
-build:
-  version: "3.0"
+endpoints:
+  shutdown:
+    enabled: true
 
-cards:
-  message: "Welcome to EazyBank cards related local APIs "
-  contactDetails:
-    name: "Dragos Lech - Developer"
-    email: "dragos@eazybank.com"
-  onCallSupport:
-    - (412) 419-3491
-    - (915) 382-1932
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://localhost:8070/eureka/
+
+info:
+  app:
+    name: "cards"
+    description: "Eazy Bank Cards Application"
+    version: "1.0.0"

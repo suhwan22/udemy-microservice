@@ -20,26 +20,34 @@ spring:
     show-sql: true
   config:
     import: "optional:configserver:http://localhost:8071/"
-#  rabbitmq:
-#    host: "localhost"
-#    port: 5672
-#    username: "guest"
-#    password: "guest"
 
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+  endpoint:
+    shutdown:
+      enabled: true
+  info:
+    env:
+      enabled: true
 
-build:
-  version: "3.0"
+endpoints:
+  shutdown:
+    enabled: true
 
-loans:
-  message: "Welcome to EazyBank loans related local APIs "
-  contactDetails:
-    name: "Amaal Grega - Developer"
-    email: "amaal@eazybank.com"
-  onCallSupport:
-    - (452) 456-2176
-    - (546) 764-8934
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://localhost:8070/eureka/
+
+info:
+  app:
+    name: "loans"
+    description: "Eazy Bank Loans Application"
+    version: "1.0.0"

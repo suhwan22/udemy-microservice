@@ -24,7 +24,7 @@ jar {
 
 jib {
     from {
-        image = "openjdk:17-jdk-slim"
+        image = "suhwan22/jdk-curl:s6"
         platforms {
 //            platform {
 //                architecture = 'amd64'

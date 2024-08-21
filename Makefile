@@ -1,12 +1,19 @@
-VERSION = s9
+VERSION = s10
 
 build: accounts gatewayserver cards loans eurekaserver configserver
+
+pull: accountsImage gatewayserverImage cardsImage loansImage eurekaserverImage configserverImage
 
 up:
 	cd compose/default && docker compose up -d
 
 down:
 	cd compose/default && docker compose down
+
+clean: down
+	docker images -a | grep "suhwan22/" | awk '{print $$3}' | xargs docker rmi
+
+#--------------------------------------------------------------------------------------------------------#
 
 accounts:
 	cd accounts && ./gradlew jib
@@ -25,8 +32,6 @@ eurekaserver:
 
 configserver:
 	cd configserver && ./gradlew jib
-
-pull: accountsImage gatewayserverImage cardsImage loansImage eurekaserverImage configserverImage
 
 accountsImage:
 	docker pull suhwan22/accounts:${VERSION}

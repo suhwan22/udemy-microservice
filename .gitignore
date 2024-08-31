@@ -3,6 +3,7 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 data/
+compose/default/.data/
 
 # Gradle artifacts
 .gradle

@@ -1,4 +1,4 @@
-VERSION = s10
+VERSION = s11
 
 build: accounts gatewayserver cards loans eurekaserver configserver
 

@@ -38,7 +38,7 @@ jib {
     }
     to {
         image = "suhwan22/${project.name}"
-        tags = ["s10"]
+        tags = ["s11"]
     }
 }
 
@@ -65,8 +65,10 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
+    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation group: 'io.opentelemetry.javaagent', name: 'opentelemetry-javaagent', version: '1.33.5'
 }
 
 dependencyManagement {

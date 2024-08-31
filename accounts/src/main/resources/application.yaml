@@ -5,8 +5,7 @@ spring:
   application:
     name: "accounts"
   profiles:
-    active:
-      - "prod"
+    active: "prod"
   datasource:
     url: jdbc:h2:mem:testdb
     driver-class-name: org.h2.Driver
@@ -40,6 +39,10 @@ management:
       enabled: true
     liveness-state:
       enabled: true
+  metrics:
+    tags:
+      application:
+        ${spring.application.name}
   endpoint:
     health:
       probes:
@@ -71,6 +74,8 @@ logging:
     com:
       eazybytes:
         accounts: DEBUG
+  pattern:
+    level: "%5p [${spring.application.name}, %X{trace_id}, %X{span_id}]"
 
 resilience4j.circuitbreaker:
   configs:
